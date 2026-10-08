@@ -1,0 +1,2 @@
+import Link from 'next/link';
+export default function NotFound(){return <div className="container-shell grid min-h-[65vh] place-items-center py-16 text-center"><div><div className="text-7xl">🧺</div><div className="section-kicker mt-5">৪০৪ • পাওয়া যায়নি</div><h1 className="section-title mt-2">এই পেজটি বাজারে নেই</h1><p className="mx-auto mt-3 max-w-md text-stone-500">আপনি যে ঠিকানাটি খুঁজছেন সেটি ভুল হতে পারে অথবা পণ্যটি আর তালিকায় নেই।</p><Link href="/" className="btn btn-primary mt-7">হোম পেজে ফিরে যান</Link></div></div>}
