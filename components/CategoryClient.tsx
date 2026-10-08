@@ -1,0 +1,6 @@
+'use client';
+import { useMemo,useState } from 'react';
+import { ChevronDown } from 'lucide-react';
+import type { Product } from '@/types';
+import ProductCard from './ProductCard';
+export default function CategoryClient({products}:{products:Product[]}){const [sort,setSort]=useState('default');const sorted=useMemo(()=>{const copy=[...products];if(sort==='asc')copy.sort((a,b)=>a.price-b.price);if(sort==='desc')copy.sort((a,b)=>b.price-a.price);return copy},[products,sort]);return <div className="mt-8"><div className="mb-6 flex justify-end"><label className="flex items-center gap-2 text-sm font-bold text-stone-600">সাজান <span className="relative"><select value={sort} onChange={e=>setSort(e.target.value)} className="appearance-none rounded-xl border border-stone-200 bg-white py-2 pl-3 pr-9 outline-none"><option value="default">ডিফল্ট</option><option value="asc">দাম: কম থেকে বেশি</option><option value="desc">দাম: বেশি থেকে কম</option></select><ChevronDown className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2" size={16}/></span></label></div><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">{sorted.map(p=><ProductCard key={p.id} product={p}/>)}</div></div>}

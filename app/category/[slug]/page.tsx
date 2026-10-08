@@ -1,0 +1,4 @@
+import { notFound } from 'next/navigation';
+import { getCategories,getProducts } from '@/lib/api';
+import CategoryClient from '@/components/CategoryClient';
+export default async function CategoryPage({params}:{params:Promise<{slug:string}>}){const {slug}=await params;const cats=await getCategories();const cat=cats.find(c=>c.slug===slug);if(!cat) notFound();const products=await getProducts(slug);if(!products.length) notFound();return <div className="container-shell py-12"><div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between"><div><div className="section-kicker">ক্যাটাগরি</div><h1 className="section-title mt-2">{cat.icon} {cat.name}</h1><p className="mt-2 text-stone-500">এই ক্যাটাগরির {products.length}টি পণ্যের আজকের দর</p></div></div><CategoryClient products={products}/></div>}
