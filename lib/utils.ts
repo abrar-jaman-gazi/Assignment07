@@ -11,7 +11,18 @@ export const pct = (value: number | string | null | undefined) => {
   return `${sign} ${bnDigits(Math.abs(numeric).toFixed(1))}%`;
 };
 
-export const unitText = (unit: string) => `প্রতি ${unit}`;
+export const normalizeUnit = (unit: string | null | undefined) => {
+  const value = String(unit ?? 'কেজি').trim();
+  const normalized = value.toLowerCase().replace(/[.\s_-]/g, '');
+  if (['kg', 'kgs', 'kilo', 'kilos', 'kilogram', 'kilograms', 'কিলোগ্রাম'].includes(normalized)) return 'কেজি';
+  if (['g', 'gm', 'gram', 'grams', 'গ্রাম'].includes(normalized)) return 'গ্রাম';
+  if (['l', 'lt', 'liter', 'litre', 'liters', 'litres', 'লিটার'].includes(normalized)) return 'লিটার';
+  if (['piece', 'pieces', 'pc', 'pcs', 'পিস'].includes(normalized)) return 'পিস';
+  if (['dozen', 'doz', 'ডজন'].includes(normalized)) return 'ডজন';
+  return value;
+};
+
+export const unitText = (unit: string) => `প্রতি ${normalizeUnit(unit)}`;
 
 export const parseBengaliNumber = (value: string | number) =>
   Number(

@@ -1,5 +1,6 @@
 import { categories as fallbackCategories, fallbackProducts } from '@/lib/data';
 import type { Category, Product } from '@/types';
+import { normalizeUnit } from '@/lib/utils';
 
 export const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || 'https://api.api-store.workers.dev/api/bazardor';
 async function request<T>(path:string): Promise<T> {
@@ -52,7 +53,7 @@ const normalizeProduct = (raw:any, index:number):Product => {
   emoji:p.emoji ?? p.icon ?? fallback?.emoji ?? '🛒',
   category:p.category ?? p.categorySlug ?? p.category_id ?? fallback?.category ?? 'sobji',
   categoryName:p.categoryName ?? p.category_name ?? fallback?.categoryName,
-  unit:p.unit ?? p.unitName ?? p.unit_name ?? fallback?.unit ?? 'কেজি',
+  unit:normalizeUnit(p.unit ?? p.unitName ?? p.unit_name ?? fallback?.unit ?? 'কেজি'),
   price:toNumber(p.price ?? p.currentPrice ?? p.todayPrice ?? p.today_price ?? fallback?.price ?? 0),
   change:readChange(p, (() => {
    const current = toNumber(p.price ?? p.currentPrice ?? p.todayPrice ?? p.today_price, NaN);
